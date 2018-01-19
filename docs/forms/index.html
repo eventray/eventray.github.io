@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Forms - EventRay</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Forms";
+    var mkdocs_page_input_path = "forms.md";
+    var mkdocs_page_url = "/forms/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> EventRay</a>
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../auth/">Authentication</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../users/">Users</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">Forms</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#post-v1forms">POST /v1/forms/</a></li>
+    
+
+    <li class="toctree-l2"><a href="#patch-v1formsform_id">PATCH /v1/forms/{form_id}</a></li>
+    
+
+    <li class="toctree-l2"><a href="#delete-v1formsform_id">DELETE /v1/forms/{form_id}</a></li>
+    
+
+    <li class="toctree-l2"><a href="#element">Element</a></li>
+    
+
+    <li class="toctree-l2"><a href="#form">Form</a></li>
+    
+
+    <li class="toctree-l2"><a href="#validation-error">Validation Error</a></li>
+    
+
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../reporting/">Reporting</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Advanced Topics</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../expressions/">Expressions</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../elements/">Elements</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">EventRay</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Forms</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="post-v1forms">POST /v1/forms/</h2>
+<p>Create a form.</p>
+<p>Request payload</p>
+<table>
+<thead>
+<tr>
+<th>attribute</th>
+<th>type</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>elements</code></td>
+<td>array</td>
+<td>The elements in the form</td>
+</tr>
+<tr>
+<td><code>event_id</code></td>
+<td>string</td>
+<td><span style="color: red">(required)</span> The event this form belongs to</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>string</td>
+<td><span style="color: red">(required)</span> The name of the form</td>
+</tr>
+<tr>
+<td><code>pages</code></td>
+<td>array</td>
+<td>The pages in this form</td>
+</tr>
+</tbody>
+</table>
+<p>Response payload</p>
+<table>
+<thead>
+<tr>
+<th>attribute</th>
+<th>type</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>date_created</code></td>
+<td>rfc3339 date/time</td>
+<td>The date the form was created</td>
+</tr>
+<tr>
+<td><code>date_last_modified</code></td>
+<td>rfc3339 date/time</td>
+<td>The last date/time the form was modified</td>
+</tr>
+<tr>
+<td><code>elements</code></td>
+<td>object</td>
+<td>A map of all the elements in the form</td>
+</tr>
+<tr>
+<td><code>event_id</code></td>
+<td>string</td>
+<td>The event this form belongs to</td>
+</tr>
+<tr>
+<td><code>form_id</code></td>
+<td>string</td>
+<td>The ID of the form</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>string</td>
+<td>The name of the form</td>
+</tr>
+<tr>
+<td><code>theme_id</code></td>
+<td>string</td>
+<td>The ID of the theme applied to this form</td>
+</tr>
+<tr>
+<td><code>user_id</code></td>
+<td>string</td>
+<td>The user that created this form</td>
+</tr>
+<tr>
+<td><code>validation_errors</code></td>
+<td>array</td>
+<td>Array of validation errors preventing the form from being published</td>
+</tr>
+</tbody>
+</table>
+<h2 id="patch-v1formsform_id">PATCH /v1/forms/{form_id}</h2>
+<p>Update a form</p>
+<p>Request payload</p>
+<table>
+<thead>
+<tr>
+<th>attribute</th>
+<th>type</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>string</td>
+<td>The name of the form</td>
+</tr>
+</tbody>
+</table>
+<p>Response payload</p>
+<table>
+<thead>
+<tr>
+<th>attribute</th>
+<th>type</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>date_created</code></td>
+<td>rfc3339 date/time</td>
+<td>The date the form was created</td>
+</tr>
+<tr>
+<td><code>date_last_modified</code></td>
+<td>rfc3339 date/time</td>
+<td>The last date/time the form was modified</td>
+</tr>
+<tr>
+<td><code>elements</code></td>
+<td>object</td>
+<td>A map of all the elements in the form</td>
+</tr>
+<tr>
+<td><code>event_id</code></td>
+<td>string</td>
+<td>The event this form belongs to</td>
+</tr>
+<tr>
+<td><code>form_id</code></td>
+<td>string</td>
+<td>The ID of the form</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>string</td>
+<td>The name of the form</td>
+</tr>
+<tr>
+<td><code>theme_id</code></td>
+<td>string</td>
+<td>The ID of the theme applied to this form</td>
+</tr>
+<tr>
+<td><code>user_id</code></td>
+<td>string</td>
+<td>The user that created this form</td>
+</tr>
+<tr>
+<td><code>validation_errors</code></td>
+<td>array</td>
+<td>Array of validation errors preventing the form from being published</td>
+</tr>
+</tbody>
+</table>
+<h2 id="delete-v1formsform_id">DELETE /v1/forms/{form_id}</h2>
+<p>Delete a form</p>
+<p>Response payload</p>
+<table>
+<thead>
+<tr>
+<th>attribute</th>
+<th>type</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>date_created</code></td>
+<td>rfc3339 date/time</td>
+<td>The date the form was created</td>
+</tr>
+<tr>
+<td><code>date_last_modified</code></td>
+<td>rfc3339 date/time</td>
+<td>The last date/time the form was modified</td>
+</tr>
+<tr>
+<td><code>elements</code></td>
+<td>object</td>
+<td>A map of all the elements in the form</td>
+</tr>
+<tr>
+<td><code>event_id</code></td>
+<td>string</td>
+<td>The event this form belongs to</td>
+</tr>
+<tr>
+<td><code>form_id</code></td>
+<td>string</td>
+<td>The ID of the form</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>string</td>
+<td>The name of the form</td>
+</tr>
+<tr>
+<td><code>theme_id</code></td>
+<td>string</td>
+<td>The ID of the theme applied to this form</td>
+</tr>
+<tr>
+<td><code>user_id</code></td>
+<td>string</td>
+<td>The user that created this form</td>
+</tr>
+<tr>
+<td><code>validation_errors</code></td>
+<td>array</td>
+<td>Array of validation errors preventing the form from being published</td>
+</tr>
+</tbody>
+</table>
+<h2 id="element">Element</h2>
+<p>Items on a form. Can be display-only or respondable.</p>
+<table>
+<thead>
+<tr>
+<th>attribute</th>
+<th>type</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="form">Form</h2>
+<table>
+<thead>
+<tr>
+<th>attribute</th>
+<th>type</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>date_created</code></td>
+<td>rfc3339 date/time</td>
+<td>The date the form was created</td>
+</tr>
+<tr>
+<td><code>date_last_modified</code></td>
+<td>rfc3339 date/time</td>
+<td>The last date/time the form was modified</td>
+</tr>
+<tr>
+<td><code>elements</code></td>
+<td>object</td>
+<td>A map of all the elements in the form</td>
+</tr>
+<tr>
+<td><code>event_id</code></td>
+<td>string</td>
+<td>The event this form belongs to</td>
+</tr>
+<tr>
+<td><code>form_id</code></td>
+<td>string</td>
+<td>The ID of the form</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>string</td>
+<td>The name of the form</td>
+</tr>
+<tr>
+<td><code>theme_id</code></td>
+<td>string</td>
+<td>The ID of the theme applied to this form</td>
+</tr>
+<tr>
+<td><code>user_id</code></td>
+<td>string</td>
+<td>The user that created this form</td>
+</tr>
+<tr>
+<td><code>validation_errors</code></td>
+<td>array</td>
+<td>Array of validation errors preventing the form from being published</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_1"></h2>
+<table>
+<thead>
+<tr>
+<th>attribute</th>
+<th>type</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="validation-error">Validation Error</h2>
+<table>
+<thead>
+<tr>
+<th>attribute</th>
+<th>type</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>code</code></td>
+<td>string</td>
+<td>Canonical string representing the reason why the form cannot be published.</td>
+</tr>
+<tr>
+<td><code>message</code></td>
+<td>string</td>
+<td>Human readable representation of the code</td>
+</tr>
+</tbody>
+</table>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../reporting/" class="btn btn-neutral float-right" title="Reporting">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../users/" class="btn btn-neutral" title="Users"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../users/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../reporting/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js"></script>
+
+</body>
+</html>

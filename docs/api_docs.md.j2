@@ -1,0 +1,49 @@
+{% macro to_data_type(value) -%}
+{%- if value is dict -%}
+[{{ value.name }}](#{{ value.name | slugify }})
+{%- else -%}
+{{ value }}
+{%- endif -%}
+{%- endmacro %}
+
+
+{% macro render_model(model) %}
+|attribute|type|description|
+|---------|----|-----------|
+{% for name in model.properties | sort -%}{%- set prop = model.properties[name]
+-%}|`{{ name }}`|{{ to_data_type(prop.type) }}{% if prop.is_array %} array {% endif %}|{% if
+prop.is_required %}<span style="color: red">(required)</span> {%
+endif %}{{ prop.description | trim }}|
+{% endfor %}
+{% endmacro %}
+
+
+{% for method in methods: %}
+## {{ method.method }} {{ method.path }}
+
+{{ method.description }}
+
+{% if method.request %}
+Request payload
+
+{{ render_model(method.request) }}
+{% endif %}
+
+{% if method.response %}
+Response payload
+
+{{ render_model(method.response) }}
+{% endif %}
+
+{% endfor %}
+
+{% if models %}
+{% for key in models | sort: %}
+{% set model = models[key] %}
+## {{ model.name }}
+
+{{ model.description }}
+
+{{ render_model(model) }}
+{% endfor %}
+{% endif %}
